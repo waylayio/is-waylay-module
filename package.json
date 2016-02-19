@@ -1,0 +1,24 @@
+{
+  "name": "@waylay/is-waylay-module",
+  "version": "1.0.0",
+  "description": "Check if a script / module is a valid waylay module",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint && tape test/test.js"
+  },
+  "keywords": [
+    "waylay",
+    "module"
+  ],
+  "author": "Gilles De Mey <gilles@waylay.io>",
+  "license": "ISC",
+  "dependencies": {
+    "falafel": "^1.2.0",
+    "lodash.get": "^4.1.2"
+  },
+  "devDependencies": {
+    "standard": "^6.0.7",
+    "tape": "^4.4.0"
+  }
+}
