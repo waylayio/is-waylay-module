@@ -1,6 +1,6 @@
 'use strict'
 
-var _get = require('lodash.get')
+var nTypes = require('ast-types').namedTypes
 var falafel = require('falafel')
 
 module.exports = function (src) {
@@ -8,25 +8,20 @@ module.exports = function (src) {
 
   falafel(src, function (node) {
     // start with assignment expression
-    var isAssignment = node.type === 'AssignmentExpression'
-    if (!isAssignment) return
+    if (!nTypes.AssignmentExpression.check(node)) return
 
-    // module.exports = function (options, send)
-    var right = _get(node, 'right')
-    if (!right) return
+    // module.exports =
+    if (!nTypes.MemberExpression.check(node.left)) return
 
-    var rightIsFunctionExpression = right.type === 'FunctionExpression'
-    if (!rightIsFunctionExpression) return
+    // function (options, send)
+    if (!nTypes.FunctionExpression.check(node.right)) return
 
-    var rightParams = right.params
-    if (!rightParams) return
+    if (!nTypes.Identifier.check(node.left.object)) return
+    if (!nTypes.Identifier.check(node.left.property)) return
 
-    var leftProperty = _get(node, 'left.object.name') + '.' + _get(node, 'left.property.name')
-    if (!leftProperty) return
+    var leftAssignment = node.left.object.name + '.' + node.left.property.name
 
-    if (leftProperty === 'module.exports' &&
-        rightIsFunctionExpression &&
-        rightParams.length === 2) {
+    if (leftAssignment === 'module.exports' && node.right.params.length === 2) {
       isValid = true
       return
     }

@@ -19,7 +19,7 @@ test('should invalidate script', function (t) {
   var mod = fs.readFileSync('test/fixtures/script.js')
 
   var isValid = validate(mod)
-  t.ok(!isValid, 'module is valid')
+  t.ok(!isValid, 'module is invalid')
 })
 
 test('should validate indented module', function (t) {
@@ -29,4 +29,13 @@ test('should validate indented module', function (t) {
 
   var isValid = validate(mod)
   t.ok(isValid, 'module is valid')
+})
+
+test('should invalidate script', function (t) {
+  t.plan(1)
+
+  var mod = fs.readFileSync('test/fixtures/too-many-args.js')
+
+  var isValid = validate(mod)
+  t.ok(!isValid, 'module is invalid')
 })
