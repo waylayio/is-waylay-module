@@ -12,14 +12,12 @@ module.exports = function (src) {
 
     // module.exports =
     if (!nTypes.MemberExpression.check(node.left)) return
+    if (!nTypes.Identifier.check(node.left.object)) return
+    if (!nTypes.Identifier.check(node.left.property)) return
+    var leftAssignment = node.left.object.name + '.' + node.left.property.name
 
     // function (options, send)
     if (!nTypes.FunctionExpression.check(node.right)) return
-
-    if (!nTypes.Identifier.check(node.left.object)) return
-    if (!nTypes.Identifier.check(node.left.property)) return
-
-    var leftAssignment = node.left.object.name + '.' + node.left.property.name
 
     if (leftAssignment === 'module.exports' && node.right.params.length === 2) {
       isValid = true

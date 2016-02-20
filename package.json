@@ -1,6 +1,6 @@
 {
   "name": "@waylay/is-waylay-module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Check if a script / module is a valid waylay module",
   "main": "index.js",
   "scripts": {
